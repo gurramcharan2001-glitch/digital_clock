@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Clock</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="clock-container">
+        <h1>Digital Clock</h1>
+        <h2 id="clock">Loading...</h2>
+    </div>
+
+    <script>
+        function fetchTime() {
+            fetch("/get-time")
+                .then(response => response.json())
+                .then(data => {
+                    let date = new Date(data.time);
+                    document.getElementById("clock").innerHTML =
+                        date.toLocaleTimeString();
+                });
+        }
+
+        setInterval(fetchTime, 1000);
+        fetchTime();
+    </script>
+
+</body>
+</html>
